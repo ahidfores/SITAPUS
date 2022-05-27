@@ -1,0 +1,55 @@
+<?php
+error_reporting(0);
+include '../../config/conn.php';
+$module = $_GET['module'];
+$act    = $_GET['act'];	
+
+  if ( $module = 'pegawai' AND $act =='simpan') {
+  $password = md5($_POST[password]);  
+    mysqli_query($conn,"INSERT INTO pegawai(id_pegawai,
+                                  no_pegawai,
+                                  nama,
+                                  alamat,
+                                  no_telp,
+                                  username,
+                                  password,
+                                  level,
+                                  status) VALUES('$_POST[id]',
+                                                 '$_POST[no_pegawai]',
+                                                 '$_POST[nama]',
+                                                 '$_POST[alamat]',
+                                                 '$_POST[telephone]',
+                                                 '$_POST[username]',
+                                                 '$password',
+                                                 '$_POST[level]',
+                                                 '$_POST[status]')");
+
+    echo "<script language='javascript'>document.location='../../?module=".$module."';</script>";
+  }elseif ($module = 'pegawai' AND $act =='edit') {
+  	$password   = md5($_POST[password]);
+    if (empty($_POST['password'])) {
+    mysqli_query($conn,"UPDATE pegawai SET nama = '$_POST[nama]',
+                                    alamat = '$_POST[alamat]',
+                                    no_telp = '$_POST[telephone]',
+                                    username = '$_POST[username]',
+                                    no_pegawai = '$_POST[no_pegawai]',
+                                    level = '$_POST[level]',
+                                    status = '$_POST[status]' 
+                                    WHERE id_pegawai = '$_POST[id]'");
+
+    }else{
+    mysqli_query($conn,"UPDATE pegawai SET nama = '$_POST[nama]',
+                                    alamat = '$_POST[alamat]',
+                                    no_telp = '$_POST[telephone]',
+                                    username = '$_POST[username]',
+                                    no_pegawai = '$_POST[no_pegawai]',
+                                    password = '$_POST[password]',
+                                    level = '$_POST[level]',
+                                    status = '$_POST[status]' 
+                                    WHERE id_pegawai = '$_POST[id]'");  
+    }  
+    echo "<script language='javascript'>
+        document.location='../../?module=".$module."';
+        </script>";
+  }
+?>
